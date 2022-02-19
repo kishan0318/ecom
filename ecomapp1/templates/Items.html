@@ -1,0 +1,48 @@
+{%extends 'master.html'%} {%block title%}{{data.title}}{%endblock%} {%block body%}
+<div class="container py-2" style="background-color:rgb(179, 151, 38)">
+    <div class="justify-content-start">
+        <div class="col-6 col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="{{data.image.url}}" alt="Card image cap" height="100px">
+                <div class=" card-body ">
+                    <h5 class="card-title ">{{data.title}}</h5>
+                </div> {%if request.user.is_authenticated%} {%if request.user.is_superuser%}
+
+
+                <a href="{% url 'ecomapp1:additems' data.id %}" class="btn btn-primary ">
+                    <i class="bi bi-bag-plus"></i>
+                </a> {%endif%} {%endif%}
+
+            </div>
+        </div>
+    </div>
+    <br> {%if data.items_set.all%}
+    <div class="container my-2 ">
+        <div class="row ">
+            {% for j in data.items_set.all %}
+            <div class="col">
+                <div class="card" style="width:18rem">
+                    <img class="card-img-top " src="{{j.file.url}} " alt="Card image cap" height="100px">
+                    <div class=" card-body">
+                        <h5 class="card-title">{{j.title}}</h5>
+                        <b>{{j.about}}</b>
+                        <h6>{{j.price}}/-RS.</h6>
+                        {% if request.user.is_authenticated %}{% if request.user.is_superuser %}
+                        <a href="{% url 'ecomapp1:additems' j.id %}" class="btn btn-primary "><i class="bi bi-pencil-square "></i></a>
+                        <a href="{% url 'ecomapp1:delitem' j.id %}" class="btn btn-primary "><i class="bi bi-trash-fill "></i></a> {%endif%} {%endif%}
+                        <a href="{% url 'ecomapp1:cart' j.id  %}" class="btn btn-primary">
+
+                            <i class="bi bi-bag-plus" name="item_id" id="item_id" value="{{j.id}}"></i></a>
+                        <a href="{% url 'ecomapp1:Dts1' j.id %}" class="btn btn-primary "><i class="bi bi-eye-fill "></i></a>
+                        <!---->
+                    </div>
+                </div><br>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    {%else%}
+    <h1>No Items to show</h1>
+    {%endif%}
+</div>
+{%endblock%}

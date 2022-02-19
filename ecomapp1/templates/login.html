@@ -1,0 +1,16 @@
+{%extends 'master.html'%} {%block title%}login page{%endblock%} {%block body%}
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="container py-5">
+        <table border="3px" align="center" cellpadding="15px" cellmargin="2px">
+            {{data.as_table}}
+        </table>
+        <div class="col my-2" align="center">
+            <button class="btn btn-outline-success" type="submit">Submit</button>
+            <input class="btn btn-outline-danger" type="reset" value="Reset"><br>
+            <a href="{% url 'ecomapp1:register' %}" class="btn btn-outline-primary my-2">Not registered? Register here.</a>
+        </div>
+
+    </div>
+</form>
+{%endblock%}

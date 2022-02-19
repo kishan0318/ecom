@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% load bootstrap4 %} {% bootstrap_css%} {% bootstrap_javascript jquery="full" %} {%load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!--
+    <link rel="stylesheet" href="{% static 'style.css' %}">-->
+
+    <title>{%block title%} {%endblock title%} | Dynotreak</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Dynotreak</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'ecomapp1:home' %}">Home<span class="sr-only ">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{%url 'ecomapp1:about'%}">About Us</a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Our Products
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="nav-link dropdown-toggle " href=" # " id="navbarDropdown1 " role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">Electronics</a>
+                        <div class="dropdown-menu1 " aria-labelledby="navbarDropdown ">
+                            <a class="dropdown-item " href="# ">Mobile</a>
+                            <a class="dropdown-item " href="# ">Earphone</a>
+                            <a class="dropdown-item " href="# ">Laptop</a>
+                        </div>
+
+                        <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown2 " role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
+                            Gift items</a>
+                        <div class="dropdown-menu2 " aria-labelledby="navbarDropdown ">
+                            <a class="dropdown-item " href="# "> for Birthday</a>
+                            <a class="dropdown-item " href="# "> for Anniversary</a>
+                            <a class="dropdown-item " href="# "> for Wedding</a>
+                            <a class="dropdown-item " href="# "> etc</a>
+                        </div>
+
+                        <a class="nav-link dropdown-toggle " href="# " id="navbarDropdown3 " role="button " data-toggle="dropdown " aria-haspopup="true " aria-expanded="false ">
+                            Clothing</a>
+                        <div class="dropdown-menu3 " aria-labelledby="navbarDropdown ">
+                            <a class="dropdown-item " href="# ">Top wear </a>
+                            <a class="dropdown-item " href="# ">Bottom Wear</a>
+                            <a class="dropdown-item " href="# ">etc</a>
+                        </div>
+
+                    </div>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{request.user.username}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{%url 'ecomapp1:logout' %}">logout</a>
+                    </div>
+                    <li class="nav-item active">
+                        <a class="btn btn-outline-success my-2 my-sm-0" href="{%url 'ecomapp1:show_cart' %} "><i
+                            class="bi bi-cart"> Cart </i></a> {%if request.user.is_superuser%}
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'ecomapp1:addproduct' %}">Add Cateogries</a>
+                    </li>
+                </li>{%endif%} {%else%}
+                <li class="nav-item active">
+                    <a class="nav-link " href="{%url 'ecomapp1:login' %}">Signin</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a class="btn btn-outline-success my-2 my-sm-0" href="{%url 'ecomapp1:register' %} ">
+                    Signup</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+            </form>
+            {%endif%}
+
+        </div>
+    </nav> {%block body%} {%endblock%}
+</body>
+<!-- Footer -->
+<footer>
+    <div class="footer-copyright" align="center">
+        <p>Website Creator: Kishan Ganguli<br>Mail @ : <a href="#">gangulykishan@gmail.com</a></p>
+    </div>
+</footer>
+<style>
+    footer {
+        font-family: 'Comic Sans Ms';
+        text-align: center;
+        padding: 1px;
+        background-color: rgb(220, 234, 241);
+        color: rgb(30, 29, 29);
+    }
+</style>
+
+</html>

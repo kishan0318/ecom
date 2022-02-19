@@ -1,0 +1,18 @@
+{%extends 'master.html'%} {%block title%}Delete{%endblock%} {%block body%}
+<div class="container" align="center">
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{data.image.url}}" alt="Card image cap" height="100px">
+                <div class=" card-body ">
+                    <h5 class="card-title ">{{data.title}}</h5>
+
+                </div>
+            </div>
+        </div>
+        <br>
+        <input class="btn btn-danger " type="submit" value="submit">
+    </form>
+</div>
+{%endblock%}

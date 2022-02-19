@@ -1,0 +1,14 @@
+{%extends 'master.html' %}{%block title%}Cart |{{user}} | {%endblock%}{%block body%}{%for i in cart%}
+<div class="container">
+
+    <div class="alert alert-primary" role="alert">
+        <img src="{{i.items.file.url}}" alt="..." class="img-thumbnail" height="20%" width="20%">
+        <div class="col">
+            <h2 class="display-8">{{i.items.title}},{{i.items.price}}/-Rs.</h2>
+            <p class="lead">{{i.Items.about}}</p>
+            <a href="{%url 'ecomapp1:delcart' i.id %}" class="btn btn-danger">Delete</a>
+            <a href="{%url 'ecomapp1:payment' %}" class="btn btn-primary" name="payment" value="{{i.id}}" id="item_id">Buy now</a>
+
+        </div>
+    </div>
+</div> {%endfor%} {%endblock%}

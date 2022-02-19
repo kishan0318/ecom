@@ -1,0 +1,17 @@
+{%extends 'master.html'%} {%block title%}signup page{%endblock%} {%block body%}
+
+<h1 align="center">Signup</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="container py-5">
+        <table border="3px" align="center" cellpadding="15px" cellmargin="2px">
+            {{data.as_table}}
+        </table>
+        <div class="col my-2" align="center">
+            <button class="btn btn-outline-success" type="submit">Submit</button>
+            <input class="btn btn-outline-danger" type="reset" value="Reset">
+        </div>
+    </div>
+</form>
+{%endblock%}

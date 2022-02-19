@@ -1,0 +1,11 @@
+{%extends 'master.html'%} {%block title%}Add items{%endblock%} {%block body%}
+<div class="container" align="center">
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <table class="table">
+            {{form.as_table}}
+        </table>
+        <input class="btn btn-primary" type="submit" value="submit"></form>
+</div>
+<br>
+<br> {%endblock%}

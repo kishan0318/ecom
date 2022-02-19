@@ -1,0 +1,22 @@
+{%extends 'master.html'%} {%block title%}Buy now{%endblock%} {%block body%}
+<div class="container">
+    <div class="row">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{data.file.url}} " alt="Card image cap ">
+            <div class="card-body ">{{data.about}}
+                <h5 class="card-title ">price: {{data.price}}/- </h5>
+                <p class="card-text "></p>
+            </div>
+        </div>
+        <div class="jumbotron jumbotron-fluid mx-2 px-5">
+            <div class="container">
+
+                <h1 class="display-4">{{data.title}}</h1>
+
+                <p class="lead">{{data.description}}</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{%endblock%}
