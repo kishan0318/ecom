@@ -1,74 +1,111 @@
+from turtle import title
+from unicodedata import category
 from rest_framework.serializers import *
 from ..models import *
-from rest_framework_jwt.settings import api_settings
-from rest_framework_jwt.settings import api_settings
 
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-class LoginSer(Serializer):
-    email=EmailField(error_messages={'required':'Email key is required','blank':'Email is required'})
-    password=CharField(error_messages={'required':'Password key is required','blank':'Password is required'})
-    token=CharField(read_only=True, required=False)
+class SignupSer(Serializer):
+    password=CharField(write_only=True,error_messages={'required':'password key is required','blank':'password  is required'})
+    email=CharField(error_messages={'required':'email key is required','blank':'email is required'})
+    username=CharField(error_messages={'required':'username key is required','blank':'username is required'})
+    first_name=CharField(error_messages={'required':False,'blank':True})
+    last_name=CharField(error_messages={'required':False,'blank':True})
 
     def validate(self,data):
-        qs=User.objects.filter(email=data.get('email'))
-        if not qs.exists():
-            raise ValidationError('No account with this email')
-        user=qs.first()
-        if user.check_password(data.get('password'))==False:
-            raise ValidationError('Invalid Password')
-        payload = jwt_payload_handler(user)
-        token = jwt_encode_handler(payload)
-        data['token']='JWT'+str(token)
+        username=data.get('username')
+        qs=User.objects.filter(username=data.get('username')).first()
+        if qs:
+            raise ValidationError("Username already exists")
+        
+        qs=User.objects.filter(email=data.get('email')).first()
+        if qs:
+            raise ValidationError("Email already exists")
         return data
 
+    def create(self,validated_data):
+        obj=User.objects.create_user(username=validated_data.get('username'),email=validated_data.get('email'),first_name=validated_data.get('first_name'),last_name=validated_data.get('last_name'),is_superuser=True,is_staff=True)
+        obj.set_password(validated_data.get('password'))
+        obj.save()
+        return validated_data
 
-class ProductsSer(ModelSerializer):
-    class Meta:
-        model = Products
-        fields =('title','image')
+
+# class ProductsSer(ModelSerializer):
+#     class Meta:
+#         model = Products
+#         fields =('id','title','image')
 
 
-class ProductsSer1(ModelSerializer):
+class ProductsSerializer(ModelSerializer):
     title=CharField(error_messages={'required':'title key is required','blank':'title  is required'})
     image=ImageField(error_messages={'required':'image key is required','blank':'image is required'})
+    item_details=SerializerMethodField()
+
+    def get_item_details(self,obj):
+        try:
+            return Items.objects.filter(products=obj.id).values('id','title','price')
+        except:
+            return ''
+
     class Meta:
         model = Products
         fields ='__all__'
 
 
+#if user want to update any all data or any single data 
 class ProductsUpSer(Serializer):
-    title=CharField(error_messages={'required':"enter a valid username",'blank':'Enter a  username'})
-    image=ImageField(error_messages={'required':"Image key is required",'blank':'Image is required '})
+    title=CharField(required=False)
+    image=ImageField(required=False)
     def update(self,instance,validated_data):
-        instance.title=validated_data.get('title')
-        instance.image=validated_data.get('image')
+        title=validated_data.get('title',instance.title)
+        image=validated_data.get('image',instance.image)
         instance.save()
+        qs=Products.objects.get(id=instance.id)
+        qs.title=title
+        qs.image=image
+        qs.save()
         return validated_data
-
+    
 
 class DelProductsSer(ModelSerializer):
     class Meta:
         model = Products
+        fields=('__all__')
+
 
 
 class ListItemSer(ModelSerializer):
+    category_name=SerializerMethodField()
+
+    def get_category_name(self,obj):
+        try:
+            return obj.products.title
+        except:return " "
+
     class Meta:
         model=Items 
-        fields ='__all__'
+        exclude=['products']
+
+
+
+class ItemCreateSerializer(ModelSerializer):
+    class Meta:
+        model=Items     
+        fields ='__all__'   
+
 
 
 class UpdelitemSer(ModelSerializer):
     class Meta:
         model=Items
-        fields =('title','price')
+        fields =('title','price','file')
+
 
 
 class CartSer(ModelSerializer):
     class Meta:
         model=Cart
         fields ='__all__'
+
 
 
 class OrderSer(ModelSerializer):

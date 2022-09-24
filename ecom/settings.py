@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'ecomapp1',
     'bootstrap4',
     'rest_framework',
-    'paypal.standard.ipn', 
+    'rest_framework.authtoken',
+    # 'paypal.standard.ipn', 
     
     
 ]
@@ -131,23 +132,38 @@ STATIC_ROOT=BASE_DIR.joinpath('ecomapp1\static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
+
+# import datetime
+
+# JWT_AUTH={
+#     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=15),
+#     'JWT_REFRESH_DELTA': datetime.timedelta(days=15),
+#     'JWT_AUTH_HEADER_PREFIX':'JWT',
+# }
+
+import datetime
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
-import datetime
+JWT_AUTH = {
 
-JWT_AUTH={
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=15),
-    'JWT_REFRESH_DELTA': datetime.timedelta(days=15),
-    'JWT_AUTH_HEADER_PREFIX':'JWT',
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=30),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+    'JWT_AUTH_COOKIE': None,
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
