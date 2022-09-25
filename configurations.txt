@@ -1,0 +1,24 @@
+-Url of the project <live now>:  https://kishanecomproj.pythonanywhere.com/
+
+-Github link: https://github.com/kishan0318/ecom
+
+-Postman collection Link:  https://www.getpostman.com/collections/c38fd2e9156cbb760340
+
+-I have created this project for frontend(Django,Html,Css,Bootstrap4) and created API's also using (Django Rest Framework).
+
+-Apis are created inside  the ecomapp1/api <api is the name of folder>
+-Apis for create Register <Create admin user>, Login, Cateogries(CRUD), Items(CRUD)
+  	1.Only admin user can Create categories,View,Update ,and Delete.
+ 	2. Normal user can view Categories and Items of that categories.
+ 	3. Admin can add ,update ,delete and view Items also.
+ 
+Requirements:
+1.Used MySql db--Done
+2.Upload to PythonAnyWhere --Done
+3.Created API's to do CRUD on Categories and Items both.
+
+Refrences:
+1.To create Mysqldb in PythonAnyWhere :: https://help.pythonanywhere.com/pages/UsingMySQL/
+2. For Implement Token Authentication :: https://simpleisbetterthancomplex.com/tutorial/2018/11/22/how-to-implement-token-authentication-using-django-rest-framework.html
+
+ThankYou!!!!

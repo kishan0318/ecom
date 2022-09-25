@@ -17,7 +17,9 @@ urlpatterns = [
     path("Product/delete/<int:pk>/",Del_product.as_view(),name='delproduct'),
     path("Product/items/add/<int:pk>",AddItem.as_view(),name='additems'),
     path("Product/items/delete/<int:pk>",DelItem.as_view(),name='delitem'),
-    path("app1/api/",include('ecomapp1.api.urls',namespace='ecomapp1')),
+
+    path("app1/api/",include('ecomapp1.api.urls',namespace='ecomapp1')),#for api'ss
+
     path("items/<int:pk>",Dts1.as_view(),name='Dts1'),
     path("items/home",action,name="items/home"),
     path('add_cart/<int:pk>',add_to_cart,name='cart'),
