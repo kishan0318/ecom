@@ -33,7 +33,7 @@ class SignupAPIView(APIView):
 
 
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny)
+    permission_classes = (AllowAny,)
 
     def post(self,request):
         username=request.data.get('username')
