@@ -17,6 +17,8 @@ Api urls::
 {{base_url}}/app1/api/updelitem/2/
 {{base_url}}/app1/api/updelitem/2/
 
+Django backend admin >Username :admin,password :12345678
+
 -Github link: https://github.com/kishan0318/ecom
 
 -Postman collection Link:  https://www.getpostman.com/collections/c38fd2e9156cbb760340
