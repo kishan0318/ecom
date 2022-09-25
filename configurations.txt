@@ -31,6 +31,13 @@ Django backend admin >Username :admin,password :12345678
  	2. Normal user can view Categories and Items of that categories.
  	3. Admin can add ,update ,delete and view Items also.
  
+-Project frontend functionalities:
+1.User Register
+2.User can login 
+3.User can view cateogries,view items and add items to cart.
+4.If admin logins with his credentials he can add ,delete categories .
+5.Admin can do crud from frontend for items.
+
 Requirements:
 1.Used MySql db--Done
 2.Upload to PythonAnyWhere --Done
