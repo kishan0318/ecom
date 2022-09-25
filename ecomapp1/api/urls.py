@@ -18,13 +18,5 @@ urlpatterns=[
 
     path('updelitem/<int:pk>/',UpdelitemView.as_view(),name='itemupdel'),
 
-    path("cart",CartListView.as_view(),name='cartviewadmin'),
-
-    path('place_order',OrderApiView.as_view(),name='orderplace'),
-
-    path('payment',PaymentApiView.as_view(),name='payment'),
-    
-    path('cart1',Cart1.as_view(),name='cart1'),
-   
    
 ]

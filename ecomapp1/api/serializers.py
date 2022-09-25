@@ -1,4 +1,3 @@
-from turtle import title
 from unicodedata import category
 from rest_framework.serializers import *
 from ..models import *
@@ -94,42 +93,26 @@ class ItemCreateSerializer(ModelSerializer):
 
 
 
-class UpdelitemSer(ModelSerializer):
-    class Meta:
-        model=Items
-        fields =('title','price','file')
-
-
-
-class CartSer(ModelSerializer):
-    class Meta:
-        model=Cart
-        fields ='__all__'
-
-
-
-class OrderSer(ModelSerializer):
-    class Meta:
-        model = Order
-        fields='__all__'
-
-
-class PaymentSer(ModelSerializer):
-    class Meta:
-        model = Payment
-        fields= ['order_id','payment_success']
-
-
-class CartSer1(Serializer):
-    #user=CharField(max_length=255)
-    items=CharField(max_length=255)
-    quantity=IntegerField(default=1)
-    def create(self,validated_data):
-        obj=Cart.objects.create(user=self.context.get('user'),quantity=validated_data.get('quantity'),items=Items.objects.get(title=validated_data.get('items')))
-        obj.save()
+class UpdelitemSer(Serializer):
+    title=CharField(required=False)
+    price=CharField(required=False)
+    about=CharField(required=False)
+    file=FileField(required=False)
+    
+    def update(self,instance,validated_data):
+        title=validated_data.get('title',instance.title)
+        price=validated_data.get('price',instance.price)
+        about=validated_data.get('about',instance.about)
+        file=validated_data.get('file',instance.file)
+        instance.save()
+        qs=Items.objects.get(id=instance.id)
+        qs.title=title
+        qs.price=price
+        qs.about=about
+        qs.file=file
+        qs.save()
         return validated_data
-
-
+       
 
 
 

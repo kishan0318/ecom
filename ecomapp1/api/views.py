@@ -73,12 +73,15 @@ class ProductsUpAPIView(APIView):
     # queryset = Products.objects.all()
     # serializer_class=ProductsUpSer
     def put(self,request,*args,**kwargs):
-        qs=Products.objects.filter(id=self.kwargs['pk']).first()
-        serializer=ProductsUpSer(qs,data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message':'Updated successfully','data':serializer.data},200)
-        return Response({'message':serializer.errors},400)
+        try:
+            qs=Products.objects.filter(id=self.kwargs['pk']).first()
+            serializer=ProductsUpSer(qs,data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'message':'Updated successfully','data':serializer.data},200)
+            return Response({'message':serializer.errors},400)
+        except Exception as e:
+            return Response({'message':'Id '+str(self.kwargs.get('pk'))+" does not exist!!!"},400)
 
 
 
@@ -94,62 +97,38 @@ class DeleteProductsAPIView(APIView):
         
 
 
-#anyone can view items
-# class ItemsAPIView(generics.ListAPIView):
-#     permission_classes=[AllowAny,]
-#     queryset=Items.objects.all()
-#     serializer_class=ListItemSer
-
-#only admin can create items
+#only admin can View items
 class ItemsAPIView(generics.ListAPIView):
     permission_classes=[IsAdminUser,]
     queryset=Items.objects.all()
     serializer_class=ListItemSer
 
 
+#only admin can create items
 class ItemsCreateAPIView(generics.CreateAPIView):
     permission_classes=[IsAdminUser,]
     queryset=Items.objects.all()
     serializer_class=ItemCreateSerializer
 
 
+
 #only admin can update/delete items
-class UpdelitemView(generics.RetrieveUpdateDestroyAPIView):
+class UpdelitemView(APIView):
     permission_classes=[IsAdminUser,]
-    queryset=Items.objects.all()
-    serializer_class= UpdelitemSer
-
-
-
-#only admin user can add or view the cart
-class CartListView(generics.ListCreateAPIView):
-    permission_classes=[IsAdminUser,]
-    queryset=Cart.objects.all()
-    serializer_class=CartSer
-
-
-
-#only admin user can add or view the Order
-class OrderApiView(generics.ListCreateAPIView):
-    permission_classes =[IsAuthenticated,]
-    queryset = Order.objects.all()
-    serializer_class=OrderSer
-
-
-
-class PaymentApiView(generics.CreateAPIView):
-    permission_classes =[IsAuthenticated,]
-    queryset = Payment.objects.all()
-    serializer_class=PaymentSer
-
-
-#only authenticated user can add to cart (authenticate:- using token)
-class Cart1(APIView):
-    permission_classes =[IsAuthenticated]
-    def post(self, request):
-        print(request.user.id)
-        serializer=CartSer1(data=request.data,context={'user':request.user})
+    def put(self,request,*args,**kwargs):
+        qs=Items.objects.filter(id=self.kwargs.get('pk')).first()
+        serializer=UpdelitemSer(qs,data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'success':"cart added successfully",'data':serializer.data},status=HTTP_200_OK)
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+            return Response({'message':'Item updated successfully !!!','data':serializer.data},200)
+        return Response({'message':'Something went wrong...','data':serializer.errors},400)
+    
+    def delete(self,request,*args,**kwargs):
+        qs=Items.objects.filter(id=self.kwargs.get('pk'))
+        if qs.exists():
+            qs.delete()
+            return Response({'message':'Item'+str(self.kwargs.get('pk'))+'deleated successfully'},200)
+        return Response({'message':"Item does not exist!!!"},400)
+
+
+

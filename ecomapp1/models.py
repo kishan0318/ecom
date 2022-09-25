@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Products(models.Model):
     title=models.CharField(max_length=100,help_text='Cateogry title')
-    image=models.ImageField(upload_to="Product_image")
+    image=models.ImageField(upload_to="Category_image")
     class Meta:
         verbose_name_plural="Cateogries"
     def __str__(self): 
