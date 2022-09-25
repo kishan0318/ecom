@@ -1,5 +1,22 @@
 -Url of the project <live now>:  https://kishanecomproj.pythonanywhere.com/
 
+Api urls::
+#for signup and login>
+{{base_url}}/app1/api/SignupAPIView
+{{base_url}}/app1/api/login
+
+#for categories>
+{{base_url}}/app1/api/view_products
+{{base_url}}/app1/api/create_or_view_product
+{{base_url}}/app1/api/update/1
+{{base_url}}/app1/api/delete/1
+
+#for items>
+{{base_url}}/app1/api/items/
+{{base_url}}/app1/api/create_items/
+{{base_url}}/app1/api/updelitem/2/
+{{base_url}}/app1/api/updelitem/2/
+
 -Github link: https://github.com/kishan0318/ecom
 
 -Postman collection Link:  https://www.getpostman.com/collections/c38fd2e9156cbb760340
